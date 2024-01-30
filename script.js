@@ -46,6 +46,25 @@ function draw() {
   })
 }
 
+// Game logic and controls
+function updateScore() {
+  score += barSize;
+  scoreCounter.innerText = score.toString().padStart(5, 0);
+}
+
+function onStack() {
+  updateScore();
+
+  currentRowIndex--;
+  barDirection = 'right';
+  // Make the previous element of the array to have the moving bar
+  for (let i = 0; i < barSize; i++) {
+    gridMatrix[currentRowIndex][i] = 1;
+  }
+
+  draw();
+}
+
 function moveRight(currentRow) {
   // Remove last element of the array
   currentRow.pop();
@@ -88,4 +107,8 @@ function main() {
   moveBar();
 }
 
+// Events
+stackButton.addEventListener('click', onStack);
+
+// Automation for the bar movement
 const gameInterval = setInterval(main, 600);
