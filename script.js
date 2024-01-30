@@ -140,7 +140,7 @@ function moveBar() {
     moveLeft(currentRow);
 
     const leftEdgeOfRow = currentRow[0];
-    
+
     if (leftEdgeOfRow === 1) {
       barDirection = 'right';
     }
@@ -154,7 +154,7 @@ function main() {
 }
 
 function onPlayAgain() {
-  location.reload();
+  window.location.reload();
 }
 
 // Events
