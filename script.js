@@ -82,4 +82,10 @@ function moveBar() {
   }
 }
 
-draw();
+// Bar moving function call
+function main() {
+  draw();
+  moveBar();
+}
+
+const gameInterval = setInterval(main, 600);
