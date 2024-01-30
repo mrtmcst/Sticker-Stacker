@@ -47,11 +47,21 @@ function draw() {
 }
 
 // Game logic and controls
+function endGame(isVictory) {
+  if (isVictory) {
+    endGameText.innerHTML = 'YOU<br>WON!';
+    endGameScreen.classList.add('win');
+  }
+
+  endGameScreen.classList.remove('hidden');
+}
+
 function checkWin() {
   // Check if we reached the top of the grid
   if (currentRowIndex === 0) {
     isGameOver = true;
     clearInterval(gameInterval);
+    endGame(true);
   }
 }
 
@@ -72,6 +82,7 @@ function checkLost() {
     if (barSize === 0) {
       isGameOver = true;
       clearInterval(gameInterval);
+      endGame(false);
     }
   }
 }
@@ -120,16 +131,17 @@ function moveBar() {
   if (barDirection === 'right') {
     moveRight(currentRow);
 
-    const lastElement = currentRow[currentRow.length -1];
-    if (lastElement === 1) {
+    const rightEdgeOfRow = currentRow[currentRow.length -1];
+    if (rightEdgeOfRow === 1) {
       barDirection = 'left';
     }
 
   } else if (barDirection === 'left') {
     moveLeft(currentRow);
 
-    const firstElement = currentRow[0];
-    if (firstElement === 1) {
+    const leftEdgeOfRow = currentRow[0];
+    
+    if (leftEdgeOfRow === 1) {
       barDirection = 'right';
     }
   }
@@ -141,8 +153,13 @@ function main() {
   moveBar();
 }
 
+function onPlayAgain() {
+  location.reload();
+}
+
 // Events
 stackButton.addEventListener('click', onStack);
+playAgainButton.addEventListener('click', onPlayAgain);
 
 // Automation for the bar movement
 const gameInterval = setInterval(main, 600);
