@@ -47,13 +47,47 @@ function draw() {
 }
 
 // Game logic and controls
+function checkWin() {
+  // Check if we reached the top of the grid
+  if (currentRowIndex === 0) {
+    isGameOver = true;
+    clearInterval(gameInterval);
+  }
+}
+
+function checkLost() {
+  const currentRow = gridMatrix[currentRowIndex];
+  const previousRow= gridMatrix[currentRowIndex + 1];
+
+  if (!previousRow) return;
+
+  // Check if there's at least one accumulated stack element under each bar
+  for (i = 0; i < currentRow.length; i++) {
+    // If there is no accumulated stack below a bar element, remove the bar pieces from the current
+    // stack and from the new bar in the next loop
+    if (currentRow[i] === 1 && previousRow[i] === 0) {
+      currentRow[i] = 0;
+      barSize--;
+    }
+    if (barSize === 0) {
+      isGameOver = true;
+      clearInterval(gameInterval);
+    }
+  }
+}
+
 function updateScore() {
   score += barSize;
+
   scoreCounter.innerText = score.toString().padStart(5, 0);
 }
 
 function onStack() {
+  checkWin();
+  checkLost();
   updateScore();
+
+  if (isGameOver) return;
 
   currentRowIndex--;
   barDirection = 'right';
