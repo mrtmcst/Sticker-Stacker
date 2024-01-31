@@ -159,6 +159,7 @@ function onPlayAgain() {
 
 // Events
 stackButton.addEventListener('click', onStack);
+stackButton.addEventListener('spacebar', onStack);
 playAgainButton.addEventListener('click', onPlayAgain);
 
 // Automation for the bar movement
